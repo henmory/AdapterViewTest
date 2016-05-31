@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Animal> animals;
     private GridView gv;
     private ArrayList<Icon> icons;
+    private Spinner spinner1;
+    private Spinner spinner2;
 //    private AnimalAdapter animalAdapter;
 //    private AnimalAdapterWithCommonViewHolder animalAdapter;
     private AnimalAdapterWithCommonAdapter animalAdapter;
@@ -76,29 +79,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         //baseAdapterExtendTest();
-        testGridView();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+//        testGridView();
+        testSpinner();
     }
 
     public void baseAdapterExtendTest(){
@@ -179,5 +161,44 @@ public class MainActivity extends AppCompatActivity {
         icons.add(new Icon(android.R.drawable.ic_delete, "name"));
         IconAdapter iconAdapter = new IconAdapter(icons, this, R.layout.gridview_item);
         gv.setAdapter(iconAdapter);
+    }
+
+    public void testSpinner(){
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        spinner2 = (Spinner) findViewById(R.id.spinner2);
+        icons = new ArrayList<>();
+        icons.add(new Icon(android.R.drawable.ic_delete,"迅捷斥候：提莫（Teemo）"));
+        icons.add(new Icon(android.R.drawable.ic_delete,"诺克萨斯之手：德莱厄斯（Darius）"));
+        icons.add(new Icon(android.R.drawable.ic_delete,"无极剑圣：易（Yi）"));
+        icons.add(new Icon(android.R.drawable.ic_delete,"德莱厄斯：德莱文（Draven）"));
+        icons.add(new Icon(android.R.drawable.ic_delete,"德邦总管：赵信（XinZhao）"));
+        icons.add(new Icon(android.R.drawable.ic_delete,"狂战士：奥拉夫（Olaf）"));
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Snackbar.make(view, "你选择的排位分段是" + parent.getItemAtPosition(position).toString(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Snackbar.make(view, "你选择的英雄是" + parent.getItemAtPosition(position).toString(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        IconAdapter iconAdapter = new IconAdapter(icons, this, R.layout.spinner_item);
+        spinner2.setAdapter(iconAdapter);
     }
 }
